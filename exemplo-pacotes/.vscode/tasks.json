@@ -1,0 +1,83 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile Java",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-command",
+                "Get-ChildItem -Recurse -Filter *.java -Path ${workspaceRoot}/src/org/desapegados | ForEach-Object { javac -d ${workspaceRoot}/bin -cp ${workspaceRoot}/src $_.FullName }"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$javac"],
+            "detail": "Compilação automática de arquivos Java"
+        }
+    ]
+}
+
+/*
+
+EXPLICAÇÃO DE COMANDOS ARGS USANDO POWERSHELL:
+
+Get-ChildItem:
+Este comando do PowerShell é usado para obter itens (arquivos e diretórios) em um local especificado. É semelhante ao comando dir no CMD ou ls no Unix.
+
+-Recurse:
+Este argumento faz com que o Get-ChildItem percorra recursivamente todos os subdiretórios do caminho especificado. 
+Ou seja, ele busca não apenas no diretório atual, mas também em todos os seus subdiretórios.
+
+-Filter *.java:
+Este argumento aplica um filtro para buscar apenas arquivos que correspondam ao padrão especificado. 
+No caso, *.java significa que ele buscará apenas arquivos com a extensão .java.
+
+-Path ${workspaceRoot}/src/org/desapegados:
+Este argumento especifica o caminho onde o Get-ChildItem deve procurar os arquivos. 
+${workspaceRoot} é uma variável que representa o diretório raiz do seu espaço de trabalho.
+
+ForEach-Object { ... }:
+Este comando do PowerShell é usado para iterar sobre cada item retornado pelo Get-ChildItem. 
+Para cada arquivo .java encontrado, ele executa o bloco de código dentro das chaves { ... }.
+
+javac: 
+O compilador Java.
+
+-d ${workspaceRoot}/bin: 
+Especifica o diretório de destino para os arquivos compilados. Neste caso, ${workspaceRoot}/bin.
+
+-cp ${workspaceRoot}/src: 
+Define o caminho das classes (classpath) para incluir o diretório src. Isso é necessário para que o compilador encontre as classes importadas.
+
+$_.FullName: 
+Representa o caminho completo do arquivo .java atual sendo processado.
+
+Explicação do -cp
+O argumento -cp (classpath) foi necessário porque seus arquivos .java dependem de outras classes que estão em diferentes pacotes. 
+O -cp ${workspaceRoot}/src inclui o diretório src no classpath, permitindo que o compilador encontre as classes importadas durante a compilação.
+
+Importações e Caminho do Classpath
+Você está correto ao observar que seus imports começam com org.desapegados.model.Cliente; e não incluem src. Isso é esperado e correto. 
+O src é apenas um diretório de origem e não faz parte do nome do pacote. 
+O classpath (-cp) precisa incluir o diretório src para que o compilador possa resolver corretamente os pacotes e classes importadas.
+Se você tivesse definido o caminho dos imports desde o src, como import src.org.desapegados.model.Cliente;, isso estaria incorreto e não seguiria a convenção de pacotes do Java. 
+Portanto, o uso do -cp é necessário para que o compilador saiba onde procurar as classes importadas.
+
+Resumo
+Get-ChildItem -Recurse -Filter *.java -Path ${workspaceRoot}/src/org/desapegados: Encontra todos os arquivos .java recursivamente dentro do diretório especificado.
+ForEach-Object { javac -d ${workspaceRoot}/bin -cp ${workspaceRoot}/src $_.FullName }: Compila cada arquivo .java encontrado, especificando o diretório de destino (-d) e o classpath (-cp).
+
+Versão do mesmo "ARGS" feito em CMD:
+
+"command": "cmd",
+"args": [
+    "/c",
+    "for /r \"${workspaceRoot}\\src\\org\\desapegados\" %f in (*.java) do javac -d \"${workspaceRoot}\\bin\" -cp \"${workspaceRoot}\\src\" \"%f\""
+],
+
+Para executar a View compilado, deve-se executar a view + o caminho do package do projeto na pasta bin:
+C:\Users\ASUS\Documents\Programação\Projetos\Projetos-Java\dio\dio-java-basico\exemplo-pacotes\bin> java org.desapegados.view.View
+
+*/
