@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar Java",
+            "type": "shell",
+            "command": "javac",
+            "args": [
+                "-d",
+                "bin",
+                "src/*.java"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$javac"],
+            "detail": "Compilação automática de arquivos Java",
+            "watch": {
+                "activeOnStart": true,
+                "watcher": {
+                    "globPattern": "src/**/*.java",
+                    "ignore": ["**/node_modules/**"]
+                }
+            }
+        }
+    ]
+}
