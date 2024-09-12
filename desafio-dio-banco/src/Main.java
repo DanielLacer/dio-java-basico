@@ -4,8 +4,8 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
-    private static List<Cliente> clientes = new ArrayList<>();
-    private static List<IConta> contas = new ArrayList<>();
+    private static final List<Cliente> clientes = new ArrayList<>();
+    private static final List<IConta> contas = new ArrayList<>();
 
     public static void main(String[] args) {
         int acao = 0;
