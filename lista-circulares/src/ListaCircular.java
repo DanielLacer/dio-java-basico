@@ -171,7 +171,7 @@ Analisando a classe `ListaCircular` abrangendo todos os cenários possíveis, us
 
     Método `get(int index)`
 
-    3)Obtendo o conteúdo do objeto na posição 0 (`ob1`):
+    3) Obtendo o conteúdo do objeto na posição 0 (`ob1`):
 
         return getNo(index).getConteudo();
 
