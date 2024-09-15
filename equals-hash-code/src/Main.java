@@ -13,7 +13,7 @@ public class Main {
         listaCarros.add(new Carro("Volkswagen"));
 
         System.out.println(listaCarros.contains(new Carro("Ford")));
-        //System.out.println(new Carro("Ford").hashCode());
+        System.out.println(listaCarros);
         
         for(Carro carro: listaCarros){
             

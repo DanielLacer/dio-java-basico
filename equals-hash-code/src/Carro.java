@@ -28,6 +28,13 @@ public class Carro {
     public int hashCode() {
         return Objects.hash(getMarca());
     }
+
+    @Override
+    public String toString() {
+        return "Carro{" +
+                "marca='" + marca + '\'' +
+                '}';
+    }
 }
 
 /*
