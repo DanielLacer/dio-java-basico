@@ -16,7 +16,13 @@ public class GenericsExample {
         intList.add(1);
         intList.add(2);
         intList.add(3);
-        System.out.println("Sum: " + sumOfList(intList)); // Chama o método com Upper Bounded Wildcard
+        System.out.println("Sum of Integers: " + sumOfList(intList)); // Chama o método com Upper Bounded Wildcard
+
+        List<Double> doubleList = new ArrayList<>();
+        doubleList.add(1.1);
+        doubleList.add(2.2);
+        doubleList.add(3.3);
+        System.out.println("Sum of Doubles: " + sumOfList(doubleList));
 
         // Exemplo de Lower Bounded Wildcard
         List<Number> numberList = new ArrayList<>();
@@ -32,7 +38,7 @@ public class GenericsExample {
     }
 
     // Método com Upper Bounded Wildcard
-    public static double sumOfList(List<? extends Number> list) {
+    public static <T extends Number> double sumOfList(List<T> list) {
         double sum = 0.0;
         for (Number num : list) {
             sum += num.doubleValue();
@@ -52,43 +58,25 @@ public class GenericsExample {
 
     Generics Wildcards em Java
 
-    1. Unbounded Wildcards (Coringas Não Limitados):
-    - Representados por `<?>`.
-    - Usados quando você não sabe ou não precisa especificar o tipo exato.
-    - Permitem que você trabalhe com qualquer tipo de objeto.
-    - Úteis quando você está escrevendo métodos que podem ser implementados usando funcionalidades fornecidas pela classe `Object` ou quando o código não depende do tipo específico do parâmetro⁴.
+    Wildcards (?) vs. Type Parameters (T)
 
-    2. Upper Bounded Wildcards (Coringas Limitados Superiormente):
-    - Representados por `<? extends T>`, onde `T` é um tipo específico.
-    - Usados quando você quer trabalhar com um tipo específico e seus subtipos.
-    - Permitem que você leia itens de uma estrutura, mas não adicionar novos itens (exceto `null`).
-    - Úteis quando você quer relaxar as restrições sobre uma variável para trabalhar com uma lista de um tipo específico e seus subtipos⁷.
+        Upper Bounded Wildcard (? extends T)
+        
+            Uso: Permite que você trabalhe com um tipo genérico que é uma subclasse de T.
+            Limitação: Você pode passar apenas elementos que são subclasses de T. No seu exemplo, List<? extends Number> aceita apenas tipos que são subclasses de Number (como Integer, Double, Float, etc.).
+            Segurança de Tipos: Garante que todos os elementos na lista são de um tipo específico ou subtipo, mantendo a segurança de tipos forte do Java.
+            Exemplo: sumOfList aceita apenas listas de números.
 
-    3. Lower Bounded Wildcards (Coringas Limitados Inferiormente):
-    - Representados por `<? super T>`, onde `T` é um tipo específico.
-    - Usados quando você quer trabalhar com um tipo específico e seus supertypes.
-    - Permitem que você adicione itens a uma estrutura, mas não ler itens de forma segura (exceto como `Object`).
-    - Úteis quando você quer maximizar a flexibilidade para adicionar elementos a uma lista de um tipo específico e seus supertypes[^10^].
+        Lower Bounded Wildcard (? super T)
 
-    4. Por convenção, os nomes dos parâmetros de tipo são letras únicas e maiúsculas:
+            Uso: Permite que você trabalhe com um tipo genérico que é uma superclasse de T.
+            Flexibilidade: Você pode passar qualquer tipo que seja T ou uma superclasse de T. No seu exemplo, List<? super Integer> aceita Integer e qualquer superclasse de Integer (como Number e Object).
+            Liberalidade: Permite maior flexibilidade, mas pode perder um pouco da segurança de tipos que os Generics oferecem, já que aceita uma gama mais ampla de tipos.
+            Exemplo: addNumbers aceita listas que podem conter Integer e qualquer superclasse de Integer.
 
-        E - Element (usado extensivamente pelo Java Collections Framework)
-        K - Key
-        N - Number
-        T - Type
-        V - Value
-        S, U, V, etc. - Usados para representar múltiplos tipos
+        Resumo
 
-    5. Upper Bounded Wildcards (`<? extends T>`)
-    - Leitura: Você pode ler itens da lista e tratá-los como o tipo `T` ou seus subtipos.
-    - Adição:  Você não pode adicionar novos itens à lista (exceto `null`), pois não é seguro adicionar um item de um tipo específico quando a lista pode conter subtipos diferentes.
-
-    6. Lower Bounded Wildcards (`<? super T>`)
-    - Leitura: Você pode ler itens da lista, mas só pode tratá-los como `Object`, pois não é seguro assumir um tipo específico.
-    - Adição:  Você pode adicionar itens do tipo `T` e seus subtipos à lista, pois é garantido que a lista pode conter esses tipos.
-
-    Portanto:
-    - Upper Bounded (`<? extends T>`): Não permite adicionar objetos.
-    - Lower Bounded (`<? super T>`): Permite adicionar objetos do tipo `T` e seus subtipos / subclasses.
+            Upper Bounded Wildcard (? extends T): Limita os elementos a serem de um tipo específico ou subtipo. Mantém a segurança de tipos forte do Java.
+            Lower Bounded Wildcard (? super T): Permite maior flexibilidade, aceitando tipos que são superclasses de T. Pode ser mais liberal e menos restritivo.
 
  */
