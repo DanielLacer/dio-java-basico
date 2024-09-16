@@ -17,7 +17,7 @@ public class Main {
         
         for(Carro carro: listaCarros){
             
-            if(((Carro) carro).getMarca().equals(chevrolet.getMarca())){
+            if((carro).getMarca().equals(chevrolet.getMarca())){
                 System.out.println("O modelo atual é um chevrolet com o seguinte hashCode: "+carro.hashCode());
                 System.out.println(chevrolet.hashCode());
             }
